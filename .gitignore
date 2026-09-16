@@ -1,0 +1,16 @@
+# Python
+app/backend/venv/
+__pycache__/
+*.pyc
+
+# Terraform
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.backup
+terraform.tfvars
+*.pem
+
+# OS
+.DS_Store
+app/backend/instance/
