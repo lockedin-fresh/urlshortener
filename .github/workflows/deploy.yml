@@ -24,4 +24,4 @@ jobs:
             git pull origin main
             cd app
             sudo docker-compose up -d --build
-            curl -fsS --retry 5 --retry-delay 3 --retry-connrefused http://localhost/health
+            curl -fsS --retry 10 --retry-delay 3 --retry-all-errors http://localhost/health
