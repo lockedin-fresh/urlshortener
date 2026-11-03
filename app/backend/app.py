@@ -4,6 +4,7 @@ from datetime import datetime
 from flask import Flask, request, jsonify, redirect
 
 from flask_sqlalchemy import SQLAlchemy
+from prometheus_flask_exporter import PrometheusMetrics
 
 app = Flask(__name__)
 from flask import send_from_directory
@@ -12,6 +13,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://urluser:urlpass@db:5432/ur
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
+metrics = PrometheusMetrics(app, group_by="endpoint")
 
 
 # --- Database model ---
