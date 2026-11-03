@@ -1,0 +1,27 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'app/**'
+      - '.github/workflows/deploy.yml'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy over SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script_stop: true
+          script: |
+            cd ~/urlshortener
+            git pull origin main
+            cd app
+            sudo docker-compose up -d --build
+            curl -fsS --retry 5 --retry-delay 3 --retry-connrefused http://localhost/health
